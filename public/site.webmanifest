@@ -1,0 +1,19 @@
+{
+  "name": "MVRK Consulting",
+  "short_name": "MVRK",
+  "icons": [
+    {
+      "src": "/All Favicons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/All Favicons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#00BDC9",
+  "background_color": "#1a1a2e",
+  "display": "standalone"
+} 
