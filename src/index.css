@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,94 +10,158 @@
   :root {
     --background: 187 79% 95%;
     --foreground: 203 22% 32%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 203 22% 32%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 203 22% 32%;
-
-    --primary: 184 53% 45%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 210 20% 51%;
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 187 79% 95%;
-    --muted-foreground: 210 20% 51%;
-
-    --accent: 349 66% 65%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 184 53% 45% / 0.2;
-    --input: 184 53% 45% / 0.2;
-    --ring: 184 53% 45%;
-
+    --bg-opacity: 0.07;
+    --card-opacity: 0.5;
     --radius: 0.5rem;
-  }
-
-  * {
-    @apply border-border;
-    scroll-behavior: smooth;
+    --color-1: 330 100% 40%;
+    --color-2: 140 100% 55%;
+    --color-3: 210 100% 30%;
+    --color-4: 60 100% 70%;
+    --color-5: 295 100% 45%;
   }
 
   body {
-    @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: theme('fontFamily.poppins');
+    background-image: url('/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-color: black;
+    opacity: var(--bg-opacity);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  #root {
+    position: relative;
+    z-index: 1;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold text-mvrk-navy-slate;
-  }
-
-  h1 {
-    @apply text-4xl md:text-5xl lg:text-6xl;
-  }
-
-  h2 {
-    @apply text-3xl md:text-4xl;
-  }
-
-  h3 {
-    @apply text-2xl md:text-3xl;
-  }
-
-  h4 {
-    @apply text-xl md:text-2xl;
-  }
-
-  section {
-    @apply py-16 md:py-20 relative;
-  }
-  
-  /* Add backdrop for better text readability with background image */
-  section:not(.transparent-section) {
-    @apply bg-white bg-opacity-70;
+    font-family: theme('fontFamily.montserrat');
+    color: white;
+    font-weight: 700;
+    letter-spacing: theme('letterSpacing.wider');
   }
 }
 
 @layer components {
-  .section-container {
-    @apply container mx-auto px-4 md:px-8;
-  }
-  
-  .section-title {
-    @apply text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 text-mvrk-navy-slate;
-  }
-
-  .card-hover {
-    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  .hero-heading-emphasis {
+    font-family: theme('fontFamily.playfair');
+    font-style: italic;
+    font-weight: 700;
+    color: theme('colors.primary');
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
-  .process-arrow {
-    @apply hidden lg:flex items-center text-mvrk-teal text-4xl;
+  .hero-heading-normal {
+    font-family: theme('fontFamily.poppins');
+    font-weight: 800;
+    color: black;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   }
-  
-  /* Card styles with semi-transparent background */
+
   .content-card {
-    @apply bg-white bg-opacity-90 rounded-lg shadow-md p-6;
+    @apply relative rounded-lg shadow-lg p-6 border border-opacity-20;
+    border-color: theme('colors.primary');
   }
+
+  .content-card::before {
+    content: '';
+    @apply absolute inset-0 bg-black rounded-lg -z-10;
+    opacity: var(--card-opacity);
+  }
+}
+
+@layer utilities {
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+}
+
+/* Scroll Performance Optimizations */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 76px; /* Add scroll padding to account for sticky header */
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Mobile fixed header adjustments */
+@media (max-width: 768px) {
+  body {
+    padding-top: 0; /* Remove default padding */
+  }
+  
+  /* Ensure the hero section doesn't have duplicate padding */
+  #hero {
+    padding-top: 0 !important;
+    margin-top: 76px;
+    min-height: calc(100vh - 76px) !important;
+  }
+  
+  /* All other sections need top padding to prevent being hidden under the fixed header */
+  section:not(#hero) {
+    padding-top: 80px !important;
+    margin-top: -20px;
+  }
+}
+
+/* Desktop sticky header behaviors */
+@media (min-width: 769px) {
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+}
+
+/* Hardware acceleration for smoother scrolling */
+.section-wrapper {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Remove blur for better performance on mobile */
+@media (max-width: 768px) {
+  .backdrop-blur-md, .backdrop-blur-sm {
+    backdrop-filter: none !important;
+  }
+
+  html {
+    scroll-padding-top: 76px; /* Padding for mobile */
+  }
+}
+
+/* For smoother scrolling on iOS */
+* {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Reduce the work browser has to do during scrolling */
+section, main, footer {
+  contain: content;
 }

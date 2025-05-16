@@ -1,0 +1,91 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+description: shortcuts
+globs: *.tsx
+alwaysApply: true
+---
+# Cursor Shortcut Rules
+
+## VV (Visually Verify)
+
+### Description
+When the user includes the shortcut `VV` in a prompt, it means to perform a visual verification and iteration process:
+
+1. **Initial Verification**:
+   - Open http://localhost:3000/ in the browser
+   - Take a screenshot of the current state
+   - Verify that the visual appearance matches expectations
+   - Report any visual issues or confirm correct rendering
+
+2. **Iterative Improvement** (if issues found):
+   - Make specific visual changes (e.g., CSS properties, dimensions)
+   - Focus on one aspect at a time (shape, size, spacing, etc.)
+   - Take new screenshot after each change
+   - Analyze if the change achieved the desired effect
+   - Document what worked/didn't work
+   - Propose next adjustment if needed
+   - Build on successful changes
+   - Avoid repeating failed approaches
+
+### Best Practices
+- Start with major properties before fine-tuning
+- Document each iteration's purpose and outcome
+- Keep track of successful values
+- Note any breakpoints or responsive behavior changes
+- Test edge cases (content overflow, different screen sizes)
+- Follow progressive enhancement approach
+
+### Use Cases
+- Checking and refining layout and styling
+- Verifying and adjusting component colors
+- Verifying and adjusting component positioning
+- Confirming and improving responsive design
+- Validating and enhancing visual effects
+- Shape refinement and spacing adjustments
+- Content alignment optimization
+
+## TV (Textually Verify)
+
+### Description
+When the user includes the shortcut `TV` in a prompt, it means to perform a text verification and iteration process:
+
+1. **Initial Verification**:
+   - Navigate to http://localhost:3000/
+   - Use either:
+     - `playwright_get_visible_text` for plain text verification
+     - `playwright_get_visible_html` for HTML structure verification
+   - Verify that the expected content is present and correct
+   - Report whether the verification passed or failed
+
+2. **Iterative Improvement** (if issues found):
+   - Fix the issue
+   - Verify content after each change
+   - Check if text renders as expected
+   - fix and verify again, until all issues are resolved
+   - Document changes and their effects
+   - Propose refinements based on results
+
+### Best Practices
+- Start with content structure before fine-tuning
+- Verify text formatting and styling
+- Document all changes and their impacts
+
+### Use Cases
+- Verifying and refining dynamic content
+- Checking and improving text content rendering
+- Validating and enhancing HTML structure
+- Text formatting optimization
+- Content structure refinement
+- Internationalization testing
+
+## General Best Practices
+- Choose appropriate shortcut based on the task (Visual vs Textual)
+- Document all changes and their effects
+- Test across different viewport sizes and content scenarios
+- Follow progressive enhancement approach
+- Maintain a clear record of iterations and outcomes
+- Consider both immediate fixes and long-term maintainability

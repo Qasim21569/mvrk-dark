@@ -1,40 +1,297 @@
+'use client';
 
-import React from "react";
+import React, { useState, useEffect } from 'react';
+import { cn, throttle } from '@/lib/utils';
+import { TubelightNavbar } from '@/components/ui/tubelight-navbar';
+import { motion } from 'framer-motion';
+import { ChevronDown, ArrowRight } from 'lucide-react';
 
 const Hero = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    // Throttled scroll handler for better performance
+    const handleScroll = throttle(() => {
+      setIsScrolled(window.scrollY > 10);
+    }, 20); 
+    
+    // Set initial scroll state
+    setIsScrolled(window.scrollY > 10);
+    
+    // Add scroll event listener with passive option for better performance
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Set loaded state after a small delay for animations
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 100);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(timer);
+    };
+  }, []);
+
+  const navItems = [
+    { label: 'Home', href: '#' },
+    { label: 'About Us', href: '#about' },
+    { label: 'Implementing Salesforce?', href: '#implementing' },
+    { label: 'Improving Salesforce?', href: '#improving' },
+    { label: 'Testimonials', href: '#testimonials' },
+    { label: 'Contact Us', href: '#contact' }
+  ];
+
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+  };
+
   return (
-    <section
-      className="min-h-screen flex items-center justify-center relative"
-    >
-      <div className="section-container relative z-10 text-center animate-fade-in">
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-mvrk-navy-slate">
-          <span className="text-mvrk-teal">M</span>
-          <span className="text-mvrk-slate">V</span>
-          <span className="text-mvrk-coral">R</span>
-          <span className="text-mvrk-teal">K</span>
-        </h1>
-        <h2 className="text-2xl md:text-3xl lg:text-4xl mb-8 text-mvrk-navy-slate">
-          Transform. Innovate. Empower.
-        </h2>
-        <p className="text-lg md:text-xl max-w-3xl mx-auto mb-10 text-mvrk-navy-slate">
-          We help businesses navigate digital transformation with strategic consulting and technology implementation.
-        </p>
-        <div className="flex flex-col md:flex-row justify-center gap-4">
-          <a
+    <>
+      {/* Fixed/Sticky Header */}
+      <div className="fixed top-0 left-0 w-full z-[100] md:sticky">
+        <header className={cn(
+          "w-full transition-all duration-300",
+          isScrolled 
+            ? "bg-[#1a1a2e]/90 backdrop-blur-md shadow-lg py-3" 
+            : "bg-[#1a1a2e]/50 py-4"
+        )}>
+          <div className="container mx-auto px-6">
+            <div className="flex items-center justify-between h-14">
+              {/* Logo */}
+              <a href="#" className="z-10 flex items-center">
+                <img
+                  src="/logo-color.png"
+                  alt="MVRK Logo"
+                  className="h-8 w-auto object-contain md:h-10"
+                />
+              </a>
+              
+              {/* Desktop Navigation */}
+              <div className="hidden md:block">
+                <TubelightNavbar items={navItems} />
+              </div>
+
+              {/* Contact button - desktop only */}
+              <div className="hidden md:block">
+                <a 
+                  href="#contact"
+                  className="px-5 py-2 bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue text-white rounded-full text-sm font-medium hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
+                >
+                  Get in Touch
+                </a>
+              </div>
+
+              {/* Mobile Navigation Button */}
+              <div className="md:hidden">
+                <button
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  className="text-mvrk-teal p-2 hover:text-mvrk-coral transition-colors duration-300 bg-white/5 rounded-full backdrop-blur-sm"
+                  aria-label="Toggle menu"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    {isMenuOpen ? (
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    ) : (
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 6h16M4 12h16M4 18h16"
+                      />
+                    )}
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+      </div>
+
+      {/* Hero Section */}
+      <section 
+        id="hero" 
+        className="relative min-h-[calc(100vh-76px)] flex flex-col overflow-hidden md:pt-0"
+      >
+        {/* Background elements */}
+        <div className="absolute inset-0 z-0">
+          {/* Background image with overlay */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center opacity-20"
+            style={{ backgroundImage: "url('/background.jpg')" }}
+          ></div>
+          
+          {/* Gradient overlay for better text visibility */}
+          <div className="absolute inset-0 bg-[#1a1a2e]/95" />
+        </div>
+        
+        {/* Main Content - Hero Section */}
+        <div className="flex-1 flex items-center z-10 pt-4 pb-10 md:py-10">
+          <div className="container mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              {/* Left Content - Text and CTA */}
+              <motion.div 
+                className="lg:col-span-7 flex flex-col items-start justify-center"
+                initial="hidden"
+                animate={isLoaded ? "show" : "hidden"}
+                variants={container}
+              >
+                {/* Section label */}
+                <motion.div
+                  variants={item}
+                  className="mb-4"
+                >
+                  <span className="px-4 py-1 bg-mvrk-coral/10 text-mvrk-coral text-sm font-medium rounded-full">
+                    Salesforce Experts
+                  </span>
+                </motion.div>
+                
+                {/* Headline */}
+                <motion.h1 
+                  variants={item}
+                  className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
+                >
+                  Giving you <span className="text-transparent bg-clip-text bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue bg-[length:200%_200%] animate-gradient">control</span> of your investment in the <span className="text-transparent bg-clip-text bg-gradient-to-r from-mvrk-coral to-mvrk-plum bg-[length:200%_200%] animate-gradient">Salesforce platform</span>
+                </motion.h1>
+                
+                {/* Description */}
+                <motion.div variants={item} className="mb-8">
+                  <p className="text-lg text-gray-300 max-w-xl leading-relaxed">
+                    As Mavericks, we see your business with fresh eyes, aren't afraid to 
+                    question the status quo, and have the expertise to help you forge your 
+                    own trail, delivering lasting value and Salesforce stability.
+                  </p>
+                </motion.div>
+                
+                {/* CTA Buttons */}
+                <motion.div variants={item} className="flex flex-wrap gap-4">
+                  <a 
+                    href="#implementing" 
+                    className="px-8 py-3 bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex items-center gap-2"
+                  >
+                    <span>Our Services</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </a>
+                  <a 
+                    href="#contact" 
+                    className="px-8 py-3 bg-white/5 backdrop-blur-sm border border-white/20 text-white font-bold rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:bg-white/10"
+                  >
+                    Contact Us
+                  </a>
+                </motion.div>
+                
+                {/* Scroll indicator */}
+                <motion.div 
+                  variants={item}
+                  className="mt-16 hidden lg:flex items-center gap-2 text-gray-400"
+                >
+                  <span className="text-sm">Scroll to explore</span>
+                  <motion.div
+                    animate={{ y: [0, 5, 0] }}
+                    transition={{ repeat: Infinity, duration: 1.5 }}
+                  >
+                    <ChevronDown className="w-4 h-4" />
+                  </motion.div>
+                </motion.div>
+              </motion.div>
+              
+              {/* Right Content - Decorative Elements */}
+              <div className="hidden lg:block relative flex-1 mt-12 lg:mt-0 w-full max-w-md mx-auto">
+                <div className="relative w-full aspect-square">
+                  
+                  {/* Main decorative element */}
+                  <div className="relative w-full h-full">
+                    {/* No decorative elements */}
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mobile Menu with frosted glass */}
+      <div
+        className={cn(
+          "fixed top-0 right-0 h-full w-72 bg-[#1a1a2e]/95 backdrop-blur-xl shadow-xl transform transition-transform duration-500 ease-in-out z-[101] border-l border-white/10",
+          isMenuOpen ? "translate-x-0" : "translate-x-full"
+        )}
+      >
+        <div className="flex flex-col pt-20 px-6">
+          <button
+            onClick={() => setIsMenuOpen(false)}
+            className="absolute top-4 right-4 text-white hover:text-mvrk-coral p-2 bg-white/5 rounded-full"
+            aria-label="Close menu"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+          {navItems.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              className="py-3 text-white hover:text-mvrk-aqua-blue transition-colors duration-300 text-base font-medium border-b border-white/10 last:border-b-0 flex items-center"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <span className="w-0 h-[1px] bg-mvrk-aqua-blue mr-0 group-hover:w-3 group-hover:mr-2 transition-all duration-300"></span>
+              {item.label}
+            </a>
+          ))}
+          
+          {/* Mobile contact button */}
+          <a 
             href="#contact"
-            className="px-8 py-3 bg-mvrk-teal text-white rounded-md hover:bg-mvrk-aqua-blue transition-colors shadow-lg"
+            className="mt-6 px-5 py-2 bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue text-white rounded-full text-sm font-medium text-center"
+            onClick={() => setIsMenuOpen(false)}
           >
-            Get Started
-          </a>
-          <a
-            href="#about"
-            className="px-8 py-3 bg-white text-mvrk-teal border border-mvrk-teal rounded-md hover:bg-mvrk-soft-cyan transition-colors"
-          >
-            Learn More
+            Get in Touch
           </a>
         </div>
       </div>
-    </section>
+
+      {/* Overlay for Mobile Menu */}
+      {isMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
+          onClick={() => setIsMenuOpen(false)}
+        />
+      )}
+    </>
   );
 };
 

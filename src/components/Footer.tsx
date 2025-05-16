@@ -1,50 +1,140 @@
-
 import React from "react";
+import { cn } from "@/lib/utils";
+import { Mail, MapPin, Phone, Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
+import { motion } from "framer-motion";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   
+  const navItems = [
+    { label: 'Home', href: '#' },
+    { label: 'About Us', href: '#about' },
+    { label: 'Services', href: '#implementing' },
+    { label: 'Testimonials', href: '#testimonials' },
+    { label: 'Contact', href: '#contact' }
+  ];
+  
+  const serviceItems = [
+    { label: 'Implementing Salesforce', href: '#implementing' },
+    { label: 'Improving Salesforce', href: '#improving' },
+    { label: 'Strategy Consulting', href: '#implementing' },
+    { label: 'Support & Maintenance', href: '#improving' },
+  ];
+  
   return (
-    <footer className="bg-mvrk-navy-slate text-white py-12">
-      <div className="section-container">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-6 md:mb-0">
-            <h2 className="text-3xl font-bold text-white mb-3">MVRK</h2>
-            <p className="text-mvrk-aqua-blue">Transform. Innovate. Empower.</p>
+    <footer className="relative z-10 py-16">
+      {/* Footer background with solid color */}
+      <div className="absolute inset-0 bg-[#151525] z-0"></div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Footer top with logo and pattern */}
+        <div className="flex flex-col md:flex-row items-center justify-between mb-12 pb-12 border-b border-white/10">
+          <div className="mb-8 md:mb-0">
+            <img src="/logo-color.png" alt="MVRK Logo" className="h-12 w-auto" />
           </div>
           
-          <div className="flex flex-col md:flex-row gap-8 md:gap-16">
-            <div>
-              <h3 className="text-lg font-semibold mb-3 text-mvrk-aqua-blue">Services</h3>
-              <ul className="space-y-2">
-                <li><a href="#" className="hover:text-mvrk-aqua-blue transition-colors">Strategy</a></li>
-                <li><a href="#" className="hover:text-mvrk-aqua-blue transition-colors">Implementation</a></li>
-                <li><a href="#" className="hover:text-mvrk-aqua-blue transition-colors">Improvement</a></li>
-              </ul>
+          <div className="flex space-x-6">
+            <a href="#" className="w-10 h-10 rounded-full bg-white/5 hover:bg-mvrk-teal/20 flex items-center justify-center text-gray-300 hover:text-mvrk-aqua-blue transition-all duration-300">
+              <Facebook size={18} />
+            </a>
+            <a href="#" className="w-10 h-10 rounded-full bg-white/5 hover:bg-mvrk-teal/20 flex items-center justify-center text-gray-300 hover:text-mvrk-aqua-blue transition-all duration-300">
+              <Twitter size={18} />
+            </a>
+            <a href="#" className="w-10 h-10 rounded-full bg-white/5 hover:bg-mvrk-teal/20 flex items-center justify-center text-gray-300 hover:text-mvrk-aqua-blue transition-all duration-300">
+              <Linkedin size={18} />
+            </a>
+            <a href="#" className="w-10 h-10 rounded-full bg-white/5 hover:bg-mvrk-teal/20 flex items-center justify-center text-gray-300 hover:text-mvrk-aqua-blue transition-all duration-300">
+              <Instagram size={18} />
+            </a>
+          </div>
+        </div>
+      
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          {/* Company Column */}
+          <div>
+            <div className="mb-5">
+              <h2 className="text-2xl font-bold text-white mb-4">MVRK</h2>
+              <p className="text-gray-300 leading-relaxed">
+                Driving clarity, stability, and success with Salesforce. Your trusted partner for implementation, improvement, and transformation.
+              </p>
             </div>
+          </div>
+          
+          {/* Quick Links Column */}
+          <div>
+            <h3 className="text-lg font-semibold text-white mb-4 pb-2 border-b border-mvrk-teal/30 inline-block">Quick Links</h3>
+            <nav className="flex flex-col space-y-2 mt-4">
+              {navItems.map((item) => (
+                <a 
+                  key={item.label}
+                  href={item.href}
+                  className="text-gray-300 hover:text-mvrk-aqua-blue transition-colors py-1 flex items-center group"
+                >
+                  <span className="w-0 h-[1px] bg-mvrk-aqua-blue mr-0 group-hover:w-3 group-hover:mr-2 transition-all duration-300"></span>
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+          </div>
+          
+          {/* Services Column */}
+          <div>
+            <h3 className="text-lg font-semibold text-white mb-4 pb-2 border-b border-mvrk-teal/30 inline-block">Our Services</h3>
+            <nav className="flex flex-col space-y-2 mt-4">
+              {serviceItems.map((item) => (
+                <a 
+                  key={item.label}
+                  href={item.href}
+                  className="text-gray-300 hover:text-mvrk-aqua-blue transition-colors py-1 flex items-center group"
+                >
+                  <span className="w-0 h-[1px] bg-mvrk-aqua-blue mr-0 group-hover:w-3 group-hover:mr-2 transition-all duration-300"></span>
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+          </div>
             
-            <div>
-              <h3 className="text-lg font-semibold mb-3 text-mvrk-aqua-blue">Company</h3>
-              <ul className="space-y-2">
-                <li><a href="#about" className="hover:text-mvrk-aqua-blue transition-colors">About</a></li>
-                <li><a href="#values" className="hover:text-mvrk-aqua-blue transition-colors">Values</a></li>
-                <li><a href="#contact" className="hover:text-mvrk-aqua-blue transition-colors">Contact</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="text-lg font-semibold mb-3 text-mvrk-aqua-blue">Connect</h3>
-              <ul className="space-y-2">
-                <li><a href="#" className="hover:text-mvrk-aqua-blue transition-colors">LinkedIn</a></li>
-                <li><a href="#" className="hover:text-mvrk-aqua-blue transition-colors">Twitter</a></li>
-                <li><a href="mailto:info@mvrk.com" className="hover:text-mvrk-aqua-blue transition-colors">Email</a></li>
-              </ul>
+          {/* Contact Column */}
+          <div>
+            <h3 className="text-lg font-semibold text-white mb-4 pb-2 border-b border-mvrk-teal/30 inline-block">Contact Us</h3>
+            <div className="space-y-4 mt-4">
+              <div className="flex items-start group">
+                <MapPin className="text-mvrk-aqua-blue mr-3 mt-1 flex-shrink-0 group-hover:text-mvrk-coral transition-colors duration-300" size={18} />
+                <p className="text-gray-300 group-hover:text-white transition-colors duration-300">123 Salesforce Way, Toronto, Ontario, Canada</p>
+              </div>
+              <div className="flex items-center group">
+                <Phone className="text-mvrk-aqua-blue mr-3 flex-shrink-0 group-hover:text-mvrk-coral transition-colors duration-300" size={18} />
+                <a href="tel:+15555555555" className="text-gray-300 hover:text-white transition-colors duration-300">
+                  +1 (555) 555-5555
+                </a>
+              </div>
+              <div className="flex items-center group">
+                <Mail className="text-mvrk-aqua-blue mr-3 flex-shrink-0 group-hover:text-mvrk-coral transition-colors duration-300" size={18} />
+                <a href="mailto:vuk@mvrk.ca" className="text-gray-300 hover:text-white transition-colors duration-300">
+                  vuk@mvrk.ca
+                </a>
+              </div>
             </div>
           </div>
         </div>
         
-        <div className="border-t border-mvrk-aqua-blue border-opacity-30 mt-8 pt-8 text-center text-sm text-mvrk-aqua-blue text-opacity-70">
-          <p>© {currentYear} MVRK Consulting. All rights reserved.</p>
+        {/* Bottom Bar - Copyright & Credits */}
+        <div className="flex flex-col md:flex-row justify-between items-center">
+          <p className="text-gray-400 text-sm">
+            © {currentYear} MVRK Consulting. All rights reserved.
+          </p>
+          <div className="mt-4 md:mt-0 flex space-x-6">
+            <a href="#" className="text-gray-400 hover:text-mvrk-aqua-blue transition-colors text-sm">
+              Privacy Policy
+            </a>
+            <a href="#" className="text-gray-400 hover:text-mvrk-aqua-blue transition-colors text-sm">
+              Terms of Service
+            </a>
+            <span className="text-gray-400 text-sm">
+              Built by Qasim Kharodia
+            </span>
+          </div>
         </div>
       </div>
     </footer>
