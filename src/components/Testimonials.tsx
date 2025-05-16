@@ -14,7 +14,7 @@ const testimonials = [
     author: "Ian Merritt",
     position: "Financial Controller",
     company: "Armament Technology Inc",
-    logo: "" // Temporarily removing logo reference until file is available
+    logo: "/testimonial logos/logo_armament_technologies.png"
   },
   {
     id: 2,
@@ -238,7 +238,7 @@ const TestimonialCard = ({ testimonial, index }: TestimonialCardProps) => {
                 {/* Display logo with previous styling */}
                 <div className="relative h-12 w-auto">
                   <img 
-                    src={testimonial.logo} 
+                    src={encodeURI(testimonial.logo)}
                     alt={`${testimonial.company} logo`}
                     className="h-full w-auto object-contain"
                     style={{ 
@@ -246,6 +246,7 @@ const TestimonialCard = ({ testimonial, index }: TestimonialCardProps) => {
                       filter: 'invert(1) hue-rotate(180deg) brightness(1.5) contrast(1.2)'
                     }}
                     onError={(e) => {
+                      console.error(`Failed to load logo: ${testimonial.logo}`);
                       // Hide image if it fails to load
                       (e.target as HTMLImageElement).style.display = 'none';
                     }}
