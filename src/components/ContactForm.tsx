@@ -56,7 +56,7 @@ const ContactForm = () => {
           className="flex items-center justify-center mb-4"
         >
           <span className="px-4 py-1 bg-mvrk-teal/10 text-mvrk-aqua-blue text-sm font-medium rounded-full">
-            Contact Us
+            Get in Touch
           </span>
         </motion.div>
         
@@ -178,7 +178,7 @@ const ContactForm = () => {
                   whileTap={{ scale: 0.95 }}
                   className="px-8 py-3 bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue text-white rounded-lg shadow-lg flex items-center gap-2 hover:shadow-mvrk-teal/20 hover:shadow-xl transition-all duration-300"
                 >
-                  <span>Send Message</span>
+                  <span>Submit</span>
                   <Send className="w-4 h-4" />
                 </motion.button>
               </div>

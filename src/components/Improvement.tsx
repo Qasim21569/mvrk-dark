@@ -59,7 +59,7 @@ const Improvement = () => {
           transition={{ duration: 0.4 }}
           className="flex items-center justify-center mb-4"
         >
-          <span className="px-4 py-1 bg-mvrk-coral/10 text-mvrk-coral text-sm font-medium rounded-full">
+          <span className="px-4 py-1 bg-mvrk-teal/10 text-mvrk-aqua-blue text-sm font-medium rounded-full">
             Improvement
           </span>
         </motion.div>
@@ -71,7 +71,7 @@ const Improvement = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
         >
-          Improving <span className="text-transparent bg-clip-text bg-gradient-to-r from-mvrk-coral to-mvrk-plum">Salesforce?</span>
+          Improving <span className="inline-block text-transparent bg-clip-text bg-[linear-gradient(90deg,#00A1E0_0%,#7FECFF_25%,#63D7E4_50%,#00A1E0_75%,#00A1E0_100%)] bg-[length:400%_100%] animate-shimmer font-extrabold">Salesforce?</span>
         </motion.h2>
         
         {/* Supporting Paragraph */}
@@ -130,7 +130,7 @@ const Improvement = () => {
                 key={index}
                 className={cn(
                   "w-2 h-2 rounded-full transition-all duration-300",
-                  activeCard === index ? "bg-mvrk-coral w-6" : "bg-mvrk-slate/30"
+                  activeCard === index ? "bg-mvrk-teal w-6" : "bg-mvrk-slate/30"
                 )}
                 onClick={() => {
                   const container = document.querySelector('#improving .snap-x');
@@ -155,11 +155,11 @@ const Improvement = () => {
           transition={{ duration: 0.6, delay: 1.2 }}
         >
           <div className="inline-flex items-center justify-center px-6 py-3 bg-[#252542]/40 backdrop-blur-sm rounded-full border border-white/10">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-mvrk-coral/30 to-mvrk-plum/20 text-white font-bold">S</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-mvrk-teal/30 to-mvrk-aqua-blue/20 text-white font-bold">S</span>
             <ArrowIcon className="mx-3" />
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-mvrk-coral/30 to-mvrk-plum/20 text-white font-bold">E</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-mvrk-teal/30 to-mvrk-aqua-blue/20 text-white font-bold">E</span>
             <ArrowIcon className="mx-3" />
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-mvrk-coral/30 to-mvrk-plum/20 text-white font-bold">T</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-mvrk-teal/30 to-mvrk-aqua-blue/20 text-white font-bold">T</span>
           </div>
         </motion.div>
       </div>
@@ -189,26 +189,26 @@ const PhaseCard = ({ phase, delay, isLast, isFirst, index }: PhaseProps) => {
       transition={{ duration: 0.6, delay }}
     >
       <div 
-        className="bg-[#252542]/40 backdrop-blur-md rounded-xl p-6 h-full border border-white/5 shadow-lg hover:border-mvrk-coral/30 transition-all duration-300 focus-within:ring-2 focus-within:ring-mvrk-coral/50"
+        className="bg-[#252542]/40 backdrop-blur-md rounded-xl p-6 h-full border border-white/5 shadow-lg hover:border-mvrk-teal/30 transition-all duration-300 focus-within:ring-2 focus-within:ring-mvrk-teal/50"
         tabIndex={0}
         aria-label={`${phase.title} phase: ${phase.description}`}
       >
-        <div className="absolute -top-1 md:-top-3 left-2 md:-left-3 bg-gradient-to-r from-mvrk-coral to-mvrk-plum text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl shadow-md">
+        <div className="absolute -top-1 md:-top-3 left-2 md:-left-3 bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl shadow-md">
           {phase.letter}
         </div>
         <div className="pt-6">
           <div className="mb-4 flex items-center justify-center">
             <div className={cn(
               "w-20 h-20 rounded-full flex items-center justify-center bg-gradient-to-br",
-              index === 0 ? "from-mvrk-coral/20 to-mvrk-plum/30" : 
-              index === 1 ? "from-mvrk-plum/20 to-mvrk-coral/30" : 
-              "from-mvrk-coral/30 to-mvrk-plum/20"
+              index === 0 ? "from-mvrk-teal/20 to-mvrk-soft-cyan/30" : 
+              index === 1 ? "from-mvrk-aqua-blue/20 to-mvrk-teal/30" : 
+              "from-mvrk-aqua-blue/20 to-mvrk-teal/30"
             )}>
               {phase.icon}
             </div>
           </div>
-          <h3 className="text-xl font-semibold mb-3 text-mvrk-coral text-center">{phase.title}</h3>
-          <p className="text-base text-gray-300 leading-relaxed tracking-wide">{phase.description}</p>
+          <h3 className="text-xl font-semibold mb-3 text-mvrk-aqua-blue text-center">{phase.title}</h3>
+          <p className="text-base text-gray-300 leading-relaxed tracking-wide text-center">{phase.description}</p>
         </div>
       </div>
       
@@ -219,9 +219,9 @@ const PhaseCard = ({ phase, delay, isLast, isFirst, index }: PhaseProps) => {
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: delay + 0.3 }}
-            className="bg-mvrk-coral/20 rounded-full p-1"
+            className="bg-mvrk-teal/20 rounded-full p-1"
           >
-            <ChevronRight className="w-8 h-8 text-mvrk-coral" />
+            <ChevronRight className="w-8 h-8 text-mvrk-aqua-blue" />
           </motion.div>
         </div>
       )}
@@ -230,7 +230,7 @@ const PhaseCard = ({ phase, delay, isLast, isFirst, index }: PhaseProps) => {
 };
 
 const ArrowIcon = ({ className }: { className?: string }) => (
-  <ChevronRight className={cn("w-4 h-4 text-mvrk-coral", className)} />
+  <ChevronRight className={cn("w-4 h-4 text-mvrk-aqua-blue", className)} />
 );
 
 export default Improvement;

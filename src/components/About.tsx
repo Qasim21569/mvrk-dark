@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { cn, throttle } from "@/lib/utils";
-import { Target, Heart, Users, ArrowRight } from "lucide-react";
+import { Target, Search, Users, ArrowRight } from "lucide-react";
 
 const About = () => {
   const [activeCard, setActiveCard] = useState(0);
@@ -59,13 +59,7 @@ const About = () => {
           transition={{ duration: 0.4, delay: 0.2 }}
         >
           <p className="text-base text-gray-300 text-center leading-relaxed tracking-wide">
-            MVRK is a strategic consulting firm specializing in guiding organizations 
-            through Salesforce implementation and optimization. Founded by industry veterans with 
-            decades of combined experience, we bring a fresh perspective to every challenge. 
-            Our team combines deep technical expertise with business acumen to deliver solutions 
-            that drive real value. Unlike traditional consultants, we see your business with fresh eyes, 
-            aren't afraid to question the status quo, and have the expertise to help you forge your own trail, 
-            delivering lasting value and Salesforce stability.
+            Founded in 2020 by Vuk Stajic, MVRK was born out of a frustration with seeing clients fail to implement Salesforce effectively. We exist to ensure our clients achieve their desired outcomes through strategic guidance, transparent practices, and a collaborative partnership that drives lasting success.
           </p>
         </motion.div>
         
@@ -187,13 +181,13 @@ const ValueCard = ({ title, description, delay, index, icon }: ValueCardProps) =
           "w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-gradient-to-br",
           index === 0 ? "from-mvrk-teal/20 to-mvrk-soft-cyan/30" : 
           index === 1 ? "from-mvrk-aqua-blue/20 to-mvrk-teal/30" : 
-          "from-mvrk-coral/20 to-mvrk-plum/30"
+          "from-mvrk-aqua-blue/20 to-mvrk-teal/30"
         )}>
           {icon}
         </div>
       </div>
       <h4 className="text-lg font-semibold mb-4 text-mvrk-aqua-blue md:text-xl text-center">{title}</h4>
-      <p className="text-base text-gray-300 leading-relaxed tracking-wide">{description}</p>
+      <p className="text-base text-gray-300 leading-relaxed tracking-wide text-center">{description}</p>
     </motion.div>
   );
 };
@@ -207,7 +201,7 @@ const values = [
   {
     title: "Radical Transparency",
     description: "We communicate openly and honestly at every step of the process. You'll always know where your project stands, what challenges we're facing, and how we plan to address them. We believe that transparency builds trust and leads to better results.",
-    icon: <Heart className="w-8 h-8 text-mvrk-aqua-blue" />
+    icon: <Search className="w-8 h-8 text-mvrk-aqua-blue" />
   },
   {
     title: "Win As A Team",

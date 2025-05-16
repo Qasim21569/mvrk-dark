@@ -39,8 +39,7 @@ const Hero = () => {
     { label: 'About Us', href: '#about' },
     { label: 'Implementing Salesforce?', href: '#implementing' },
     { label: 'Improving Salesforce?', href: '#improving' },
-    { label: 'Testimonials', href: '#testimonials' },
-    { label: 'Contact Us', href: '#contact' }
+    { label: 'Testimonials', href: '#testimonials' }
   ];
 
   const container = {
@@ -69,66 +68,66 @@ const Hero = () => {
             ? "bg-[#1a1a2e]/90 backdrop-blur-md shadow-lg py-3" 
             : "bg-[#1a1a2e]/50 py-4"
         )}>
-          <div className="container mx-auto px-6">
+        <div className="container mx-auto px-6">
             <div className="flex items-center justify-between h-14">
-              {/* Logo */}
+            {/* Logo */}
               <a href="#" className="z-10 flex items-center">
-                <img
-                  src="/logo-color.png"
-                  alt="MVRK Logo"
+              <img
+                src="/logo-color.png"
+                alt="MVRK Logo"
                   className="h-8 w-auto object-contain md:h-10"
-                />
+              />
+            </a>
+            
+            {/* Desktop Navigation */}
+            <div className="hidden md:block">
+              <TubelightNavbar items={navItems} />
+            </div>
+
+            {/* Contact button - desktop only */}
+            <div className="hidden md:block">
+              <a 
+                href="#contact"
+                className="px-5 py-2 bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue text-white rounded-full text-sm font-medium hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
+              >
+                Get in Touch
               </a>
-              
-              {/* Desktop Navigation */}
-              <div className="hidden md:block">
-                <TubelightNavbar items={navItems} />
-              </div>
+            </div>
 
-              {/* Contact button - desktop only */}
-              <div className="hidden md:block">
-                <a 
-                  href="#contact"
-                  className="px-5 py-2 bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue text-white rounded-full text-sm font-medium hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
+            {/* Mobile Navigation Button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-mvrk-teal p-2 hover:text-mvrk-coral transition-colors duration-300 bg-white/5 rounded-full backdrop-blur-sm"
+                aria-label="Toggle menu"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  Get in Touch
-                </a>
-              </div>
-
-              {/* Mobile Navigation Button */}
-              <div className="md:hidden">
-                <button
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="text-mvrk-teal p-2 hover:text-mvrk-coral transition-colors duration-300 bg-white/5 rounded-full backdrop-blur-sm"
-                  aria-label="Toggle menu"
-                >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    {isMenuOpen ? (
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    ) : (
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4 6h16M4 12h16M4 18h16"
-                      />
-                    )}
-                  </svg>
-                </button>
-              </div>
+                  {isMenuOpen ? (
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  ) : (
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  )}
+                </svg>
+              </button>
             </div>
           </div>
-        </header>
+        </div>
+      </header>
       </div>
 
       {/* Hero Section */}
@@ -146,73 +145,65 @@ const Hero = () => {
           
           {/* Gradient overlay for better text visibility */}
           <div className="absolute inset-0 bg-[#1a1a2e]/95" />
-        </div>
-        
-        {/* Main Content - Hero Section */}
+      </div>
+
+      {/* Main Content - Hero Section */}
         <div className="flex-1 flex items-center z-10 pt-4 pb-10 md:py-10">
-          <div className="container mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              {/* Left Content - Text and CTA */}
-              <motion.div 
-                className="lg:col-span-7 flex flex-col items-start justify-center"
-                initial="hidden"
-                animate={isLoaded ? "show" : "hidden"}
-                variants={container}
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            {/* Left Content - Text and CTA */}
+            <motion.div 
+              className="lg:col-span-7 flex flex-col items-start justify-center"
+              initial="hidden"
+              animate={isLoaded ? "show" : "hidden"}
+              variants={container}
+            >
+              {/* Headline */}
+              <motion.h1 
+                variants={item}
+                className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
               >
-                {/* Section label */}
-                <motion.div
-                  variants={item}
-                  className="mb-4"
-                >
-                  <span className="px-4 py-1 bg-mvrk-coral/10 text-mvrk-coral text-sm font-medium rounded-full">
-                    Salesforce Experts
-                  </span>
-                </motion.div>
-                
-                {/* Headline */}
-                <motion.h1 
-                  variants={item}
-                  className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
-                >
-                  Giving you <span className="text-transparent bg-clip-text bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue bg-[length:200%_200%] animate-gradient">control</span> of your investment in the <span className="text-transparent bg-clip-text bg-gradient-to-r from-mvrk-coral to-mvrk-plum bg-[length:200%_200%] animate-gradient">Salesforce platform</span>
-                </motion.h1>
-                
-                {/* Description */}
-                <motion.div variants={item} className="mb-8">
-                  <p className="text-lg text-gray-300 max-w-xl leading-relaxed">
-                    As Mavericks, we see your business with fresh eyes, aren't afraid to 
-                    question the status quo, and have the expertise to help you forge your 
-                    own trail, delivering lasting value and Salesforce stability.
-                  </p>
-                </motion.div>
-                
-                {/* CTA Buttons */}
-                <motion.div variants={item} className="flex flex-wrap gap-4">
-                  <a 
-                    href="#contact" 
-                    className="px-8 py-3 bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex items-center gap-2"
-                  >
-                    <span>Contact Us</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
-                </motion.div>
-                
-                {/* Scroll indicator */}
-                <motion.div 
-                  variants={item}
-                  className="mt-16 hidden lg:flex items-center gap-2 text-gray-400"
-                >
-                  <span className="text-sm">Scroll to explore</span>
-                  <motion.div
-                    animate={{ y: [0, 5, 0] }}
-                    transition={{ repeat: Infinity, duration: 1.5 }}
-                  >
-                    <ChevronDown className="w-4 h-4" />
-                  </motion.div>
-                </motion.div>
+                Giving you <span className="inline-block text-transparent bg-clip-text bg-[linear-gradient(90deg,#617f95_0%,#A5C1D9_25%,#8EABC4_50%,#617f95_75%,#617f95_100%)] bg-[length:400%_100%] animate-shimmer font-extrabold">control</span> of your investment in the{" "}
+                <span className="inline-block text-transparent bg-clip-text bg-[linear-gradient(90deg,#00A1E0_0%,#7FECFF_25%,#63D7E4_50%,#00A1E0_75%,#00A1E0_100%)] bg-[length:400%_100%] animate-shimmer font-extrabold">Salesforce</span>{" "}
+                <span className="inline-block text-transparent bg-clip-text bg-[linear-gradient(90deg,#00A1E0_0%,#7FECFF_25%,#63D7E4_50%,#00A1E0_75%,#00A1E0_100%)] bg-[length:400%_100%] animate-shimmer font-extrabold">platform</span>
+              </motion.h1>
+              
+              {/* Description */}
+              <motion.div variants={item} className="mb-8">
+                <p className="text-lg text-gray-300 max-w-xl leading-relaxed">
+                  As Mavericks, we see your business with fresh eyes, aren't afraid to 
+                  question the status quo, and have the expertise to help you forge your 
+                  own trail, delivering lasting value and Salesforce stability.
+                </p>
               </motion.div>
               
-              {/* Right Content - Decorative Elements */}
+              {/* CTA Buttons */}
+              <motion.div variants={item} className="flex flex-wrap gap-4">
+                <a 
+                    href="#contact" 
+                  className="px-8 py-3 bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex items-center gap-2"
+                >
+                    <span>Contact Us</span>
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              </motion.div>
+              
+              {/* Scroll indicator */}
+              <motion.div 
+                variants={item}
+                className="mt-16 hidden lg:flex items-center gap-2 text-gray-400"
+              >
+                <span className="text-sm">Scroll to explore</span>
+                <motion.div
+                  animate={{ y: [0, 5, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.5 }}
+                >
+                  <ChevronDown className="w-4 h-4" />
+                </motion.div>
+              </motion.div>
+            </motion.div>
+            
+            {/* Right Content - Decorative Elements */}
               <div className="hidden lg:block relative flex-1 mt-12 lg:mt-0 w-full max-w-md mx-auto">
                 <div className="relative w-full aspect-square">
                   

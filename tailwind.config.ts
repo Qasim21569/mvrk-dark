@@ -117,6 +117,14 @@ export default {
   				'50%': { backgroundPosition: '100% 50%' },
   				'100%': { backgroundPosition: '0% 50%' },
   			},
+            'shimmer': {
+                '0%': { 
+                    backgroundPosition: '-200% 0',
+                },
+                '100%': { 
+                    backgroundPosition: '200% 0',
+                }
+            },
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
@@ -124,6 +132,7 @@ export default {
   			'fade-in': 'fade-in 0.5s ease-out',
   			'fade-in-right': 'fade-in-right 0.5s ease-out',
   			'gradient': 'gradient 8s ease infinite',
+            'shimmer': 'shimmer 8s ease-in-out infinite',
   		},
   		backgroundSize: {
   			'200%': '200% 200%',
