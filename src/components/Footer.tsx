@@ -40,6 +40,9 @@ const Footer = () => {
             <a href="https://www.youtube.com/@mvrkinc" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 hover:bg-mvrk-teal/20 flex items-center justify-center text-gray-300 hover:text-mvrk-aqua-blue transition-all duration-300">
               <Youtube size={18} />
             </a>
+            <a href="https://zapier.com/experts/mvrk" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 hover:bg-mvrk-teal/20 flex items-center justify-center text-gray-300 hover:text-mvrk-aqua-blue transition-all duration-300">
+              <img src="/zapier_icon-removebg-preview.png" alt="Zapier" className="w-[18px] h-[18px] object-contain" />
+            </a>
           </div>
         </div>
         
