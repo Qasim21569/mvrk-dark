@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { cn, throttle } from "@/lib/utils";
-import { Target, Search, Users, ArrowRight } from "lucide-react";
+import { Lightbulb, Search, Users, ArrowRight } from "lucide-react";
 
 const About = () => {
   const [activeCard, setActiveCard] = useState(0);
@@ -196,7 +196,7 @@ const values = [
   {
     title: "Strategy > Technology",
     description: "We believe that technology should serve your business strategy, not the other way around. We focus on understanding your unique needs and objectives before recommending technical solutions, ensuring that every implementation drives meaningful business outcomes.",
-    icon: <Target className="w-8 h-8 text-mvrk-aqua-blue" />
+    icon: <Lightbulb className="w-8 h-8 text-mvrk-aqua-blue" />
   },
   {
     title: "Radical Transparency",

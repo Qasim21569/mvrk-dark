@@ -3,14 +3,14 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { cn, throttle } from "@/lib/utils";
-import { Target, Handshake, Rocket, ChevronRight } from "lucide-react";
+import { Lightbulb, Handshake, Rocket, ChevronRight } from "lucide-react";
 
 const phases = [
   {
     letter: "S",
     title: "Strategize",
     description: "We begin by understanding your current reality and goals, establishing a clear strategy for your CRM deployment that aligns with your business objectives.",
-    icon: <Target className="w-12 h-12 text-mvrk-aqua-blue" />
+    icon: <Lightbulb className="w-12 h-12 text-mvrk-aqua-blue" />
   },
   {
     letter: "P",
