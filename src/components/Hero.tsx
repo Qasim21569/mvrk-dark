@@ -189,17 +189,11 @@ const Hero = () => {
                 {/* CTA Buttons */}
                 <motion.div variants={item} className="flex flex-wrap gap-4">
                   <a 
-                    href="#implementing" 
+                    href="#contact" 
                     className="px-8 py-3 bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex items-center gap-2"
                   >
-                    <span>Our Services</span>
+                    <span>Contact Us</span>
                     <ArrowRight className="w-4 h-4" />
-                  </a>
-                  <a 
-                    href="#contact" 
-                    className="px-8 py-3 bg-white/5 backdrop-blur-sm border border-white/20 text-white font-bold rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:bg-white/10"
-                  >
-                    Contact Us
                   </a>
                 </motion.div>
                 
@@ -276,10 +270,11 @@ const Hero = () => {
           {/* Mobile contact button */}
           <a 
             href="#contact"
-            className="mt-6 px-5 py-2 bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue text-white rounded-full text-sm font-medium text-center"
+            className="mt-6 px-5 py-3 bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue text-white rounded-lg font-medium text-center shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex items-center justify-center gap-2"
             onClick={() => setIsMenuOpen(false)}
           >
-            Get in Touch
+            <span>Contact Us</span>
+            <ArrowRight className="w-4 h-4" />
           </a>
         </div>
       </div>
