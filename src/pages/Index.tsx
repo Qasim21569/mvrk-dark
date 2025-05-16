@@ -27,21 +27,6 @@ const Index = () => {
 
   return (
     <div className="flex flex-col min-h-screen relative bg-[#1a1a2e]">
-      {/* Fixed background with optimized rendering */}
-      <div 
-        className="fixed inset-0 z-0" 
-        style={{
-          backgroundImage: "url('/background.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundAttachment: "fixed",
-          opacity: "0.15",
-          willChange: "transform",
-          transform: "translateZ(0)",
-          backfaceVisibility: "hidden"
-        }}
-      />
-      
       {/* Globally blurred overlay with reduced blur for better performance */}
       <div 
         className="fixed inset-0 z-0 bg-[#1a1a2e]/70"

@@ -137,17 +137,11 @@ const Hero = () => {
       >
         {/* Background elements */}
         <div className="absolute inset-0 z-0">
-          {/* Background image with overlay */}
-          <div 
-            className="absolute inset-0 bg-cover bg-center opacity-20"
-            style={{ backgroundImage: "url('/background.jpg')" }}
-          ></div>
-          
           {/* Gradient overlay for better text visibility */}
           <div className="absolute inset-0 bg-[#1a1a2e]/95" />
-      </div>
+        </div>
 
-      {/* Main Content - Hero Section */}
+        {/* Main Content - Hero Section */}
         <div className="flex-1 flex items-center z-10 pt-4 pb-10 md:py-10">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
