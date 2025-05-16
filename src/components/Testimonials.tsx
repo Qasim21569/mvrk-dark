@@ -14,7 +14,7 @@ const testimonials = [
     author: "Ian Merritt",
     position: "Financial Controller",
     company: "Armament Technology Inc",
-    logo: "/testimonial logos/logo_armament_technologies.png"
+    logo: "" // Temporarily removing logo reference until file is available
   },
   {
     id: 2,
