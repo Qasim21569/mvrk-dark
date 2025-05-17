@@ -18,21 +18,21 @@ const testimonials = [
   },
   {
     id: 2,
-    quote: "Exceptional Service and Expertise",
-    description: "Working with MVRK for our initial Salesforce configuration and implementation was a great experience. Their ability to connect with our team and understand our business processes was outstanding. Deliverables were consistently on time, with presentations showcasing how each configuration relates to our processes. We continue to rely on their expertise and professionalism surrounding the platform. I highly recommend MVRK for their exceptional people skills and dedication to client satisfaction.",
-    author: "Patrick Leroux",
-    position: "CTO",
-    company: "Carmela Industries",
-    logo: ""
+    quote: "Invaluable Expertise, Seamless Solutions",
+    description: "We have had the pleasure of working with Vuk & MVRK for over five years. We rely on them for Salesforce implementation and broad integration expertise. MVRK has also been instrumental in optimizing our workflows to create seamless solutions. Their continued support of the Zapier integrations between our ERP system (Acumatica) with Salesforce, Amazon, and our various e-commerce platforms (BigCommerce and Shopify) has dramatically sped up our order-to-ship process, leading to greater efficiency and faster turnaround times for our customers. This has significantly improved our financial tracking and reporting. Their expertise has been invaluable to our business! The MVRK teams' technical skills, collaborative approach, and commitment to understanding our business needs have made them a trusted partner. We continue to embark on new ventures with MVRK and highly recommend them for their expertise in system integration and Salesforce consultation.",
+    author: "Ian Merritt",
+    position: "Financial Controller",
+    company: "Armament Technology Inc",
+    logo: "/testimonial logos/logo_armament_technologies.png"
   },
   {
     id: 3,
-    quote: "Manufacturing experts",
-    description: "I highly recommend MVRK for their deep expertise in Salesforce, streamlining manufacturing operations, optimizing financial applications and the Salesforce platform overall. We rely on them heavily as being the smartest people in the room when we are talking about Salesforce with our business stakeholders.",
-    author: "Doug McIntyre",
-    position: "Associate Director, Enterprise Applications",
-    company: "Boston Dynamics",
-    logo: ""
+    quote: "Invaluable Expertise, Seamless Solutions",
+    description: "We have had the pleasure of working with Vuk & MVRK for over five years. We rely on them for Salesforce implementation and broad integration expertise. MVRK has also been instrumental in optimizing our workflows to create seamless solutions. Their continued support of the Zapier integrations between our ERP system (Acumatica) with Salesforce, Amazon, and our various e-commerce platforms (BigCommerce and Shopify) has dramatically sped up our order-to-ship process, leading to greater efficiency and faster turnaround times for our customers. This has significantly improved our financial tracking and reporting. Their expertise has been invaluable to our business! The MVRK teams' technical skills, collaborative approach, and commitment to understanding our business needs have made them a trusted partner. We continue to embark on new ventures with MVRK and highly recommend them for their expertise in system integration and Salesforce consultation.",
+    author: "Ian Merritt",
+    position: "Financial Controller",
+    company: "Armament Technology Inc",
+    logo: "/testimonial logos/logo_armament_technologies.png"
   }
 ];
 
