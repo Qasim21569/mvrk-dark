@@ -159,7 +159,7 @@ const Hero = () => {
               >
                 Giving you <span className="inline-block text-transparent bg-clip-text bg-[linear-gradient(90deg,#617f95_0%,#A5C1D9_25%,#8EABC4_50%,#617f95_75%,#617f95_100%)] bg-[length:400%_100%] animate-shimmer font-extrabold">control</span> of your investment in the{" "}
                 <span className="inline-block text-transparent bg-clip-text bg-[linear-gradient(90deg,#00A1E0_0%,#7FECFF_25%,#63D7E4_50%,#00A1E0_75%,#00A1E0_100%)] bg-[length:400%_100%] animate-shimmer font-extrabold">Salesforce</span>{" "}
-                <span className="inline-block text-transparent bg-clip-text bg-[linear-gradient(90deg,#00A1E0_0%,#7FECFF_25%,#63D7E4_50%,#00A1E0_75%,#00A1E0_100%)] bg-[length:400%_100%] animate-shimmer font-extrabold">platform</span>
+                <span className="inline-block text-white font-extrabold">platform</span>
               </motion.h1>
               
               {/* Description */}
