@@ -111,7 +111,7 @@ const Implementation = () => {
           transition={{ duration: 0.4, delay: 0.2 }}
         >
           <p className="text-base text-gray-300 mt-4 leading-relaxed tracking-wide">
-            Interested in implementing Salesforce? Our proven 3-phase plan – Strategize, Procure, Implement – provides a clear and guided path to your successful Salesforce deployment, always focusing on a clear MVP to deliver value quickly and cost-effectively while meeting your strategic goals.
+            Interested in implementing Salesforce? Our proven 3-phase plan provides a clear and guided path to your successful Salesforce deployment, always focusing on a clear MVP to deliver value quickly and cost-effectively while meeting your strategic goals.
           </p>
         </motion.div>
         

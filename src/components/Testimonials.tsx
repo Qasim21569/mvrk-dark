@@ -112,7 +112,7 @@ const Testimonials = () => {
       
       // Use responsive scroll speed - slower on mobile, faster on desktop
       const isMobile = window.innerWidth < 768;
-      carousel.scrollLeft += isMobile ? 1.5 : 2.5;
+      carousel.scrollLeft += isMobile ? 1 : 1.5;
       
       // Reset when we've scrolled through the first set of testimonials
       const firstSetWidth = carousel.scrollWidth / 3;
@@ -344,8 +344,8 @@ const TestimonialCard = ({ testimonial, index, onInteraction }: TestimonialCardP
           {/* Scrollable content area with always-visible scrollbar on mobile */}
           <div className="h-full overflow-y-auto pr-2 custom-scrollbar show-scrollbar-mobile">
             <p className="text-base text-gray-200 leading-relaxed whitespace-pre-line pb-8">
-              {testimonial.description}
-            </p>
+            {testimonial.description}
+          </p>
           </div>
           
           {/* Fade gradient at the bottom to indicate more content */}
@@ -375,30 +375,30 @@ const TestimonialCard = ({ testimonial, index, onInteraction }: TestimonialCardP
         
         {/* Company logo and name */}
         <div className="mt-3 flex flex-col items-start">
-          {/* Display company name */}
+                {/* Display company name */}
           <div className="text-xl font-bold text-white opacity-70 mb-3">
-            {testimonial.company}
-          </div>
-          
+                  {testimonial.company}
+                </div>
+                
           {/* Display logo below company name with consistent size */}
           {testimonial.logo && (
             <div className="h-20 w-full flex justify-start">
-              <img 
-                src={encodeURI(testimonial.logo)}
-                alt={`${testimonial.company} logo`}
+                  <img 
+                    src={encodeURI(testimonial.logo)}
+                    alt={`${testimonial.company} logo`}
                 className="h-full max-h-20 w-auto object-contain"
-                style={{ 
-                  mixBlendMode: 'difference',
-                  filter: 'invert(1) hue-rotate(180deg) brightness(1.5) contrast(1.2)'
-                }}
-                onError={(e) => {
-                  console.error(`Failed to load logo: ${testimonial.logo}`);
-                  // Hide image if it fails to load
-                  (e.target as HTMLImageElement).style.display = 'none';
-                }}
-              />
-            </div>
-          )}
+                    style={{ 
+                      mixBlendMode: 'difference',
+                      filter: 'invert(1) hue-rotate(180deg) brightness(1.5) contrast(1.2)'
+                    }}
+                    onError={(e) => {
+                      console.error(`Failed to load logo: ${testimonial.logo}`);
+                      // Hide image if it fails to load
+                      (e.target as HTMLImageElement).style.display = 'none';
+                    }}
+                  />
+              </div>
+            )}
         </div>
       </div>
     </motion.div>
