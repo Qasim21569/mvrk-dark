@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { event } from "@/lib/analytics";
@@ -14,7 +14,7 @@ const testimonials = [
     author: "Ian Merritt",
     position: "Financial Controller",
     company: "Armament Technology Inc",
-    logo: "/testimonial logos/logo_armament_technologies.png"
+    logo: "/testimonial logos/armament.png"
   },
   
   {
@@ -88,80 +88,57 @@ const testimonials = [
   }
 ];
 
-// Duplicate the testimonials to ensure we have enough content for infinite scrolling
 const extendedTestimonials = [...testimonials, ...testimonials, ...testimonials];
+const scrollSensitivity = 3; // Increased sensitivity
 
 const Testimonials = () => {
-  const [isPaused, setIsPaused] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
-  const scrollIntervalRef = useRef<number | null>(null);
-  // Add state for drag functionality
   const [isMouseDown, setIsMouseDown] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
   
-  // Smooth infinite scrolling with consistent speed
-  useEffect(() => {
-    if (!carouselRef.current) return;
-    
-    const carousel = carouselRef.current;
-    
-    // Function to handle the scrolling
-    const handleScroll = () => {
-      if (isPaused) return;
-      
-      // Use responsive scroll speed - slower on mobile, faster on desktop
-      const isMobile = window.innerWidth < 768;
-      carousel.scrollLeft += isMobile ? 1 : 1.5;
-      
-      // Reset when we've scrolled through the first set of testimonials
-      const firstSetWidth = carousel.scrollWidth / 3;
-      if (carousel.scrollLeft >= firstSetWidth) {
-        // Jump back to the beginning of the second set (which is identical to the first)
-        carousel.scrollLeft = 0;
-      }
-    };
-    
-    // Set up the interval for smooth scrolling
-    if (!isPaused) {
-      scrollIntervalRef.current = window.setInterval(handleScroll, 20);
-    }
-    
-    // Clean up
-    return () => {
-      if (scrollIntervalRef.current !== null) {
-        window.clearInterval(scrollIntervalRef.current);
-      }
-    };
-  }, [isPaused]);
-  
-  // Handle window resize and visibility changes
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        setIsPaused(true);
-      } else {
-        setIsPaused(false);
-      }
-    };
-    
-    const handleResize = () => {
-      if (carouselRef.current) {
-        // Reset position on resize to prevent getting stuck
-        carouselRef.current.scrollLeft = 0;
-      }
-    };
-    
-    window.addEventListener('resize', handleResize);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
-  }, []);
+  // For drag functionality
+  const [startX, setStartX] = useState(0); // MouseEvent.pageX at mousedown
+  const [initialUnwrappedScrollAtMouseDown, setInitialUnwrappedScrollAtMouseDown] = useState(0);
+  const [unwrappedScrollLeft, setUnwrappedScrollLeft] = useState(0); // Master logical scroll position
 
-  // Track testimonial interactions
+  const setPhysicalScrollPosition = useCallback(() => {
+    if (!carouselRef.current || extendedTestimonials.length === 0) return;
+    const oneSetWidth = carouselRef.current.scrollWidth / 3;
+    if (oneSetWidth > 0) {
+      let physicalScroll = (unwrappedScrollLeft % oneSetWidth);
+      if (physicalScroll < 0) {
+        physicalScroll += oneSetWidth;
+      }
+      physicalScroll += oneSetWidth;
+      carouselRef.current.scrollLeft = physicalScroll;
+    } else {
+      carouselRef.current.scrollLeft = unwrappedScrollLeft; // Fallback
+    }
+  }, [unwrappedScrollLeft]);
+
+  useEffect(() => {
+    setPhysicalScrollPosition();
+  }, [unwrappedScrollLeft, setPhysicalScrollPosition]);
+  
+  useEffect(() => {
+    const initAndResizeHandler = () => {
+      if (carouselRef.current && extendedTestimonials.length > 0) {
+        const oneSetWidth = carouselRef.current.scrollWidth / 3;
+        if (oneSetWidth > 0) {
+          // Initial physical position
+          carouselRef.current.scrollLeft = oneSetWidth;
+          // Initial logical position
+          setUnwrappedScrollLeft(oneSetWidth);
+        }
+      }
+    };
+
+    initAndResizeHandler(); // Call on mount
+    window.addEventListener('resize', initAndResizeHandler);
+    return () => {
+      window.removeEventListener('resize', initAndResizeHandler);
+    };
+  }, []); // Empty dependency array, runs once on mount and cleanup on unmount
+
   const handleTestimonialInteraction = (interactionType: 'hover' | 'tap', testimonialId: number) => {
     event({
       action: interactionType === 'hover' ? 'testimonial_hover' : 'testimonial_tap',
@@ -170,54 +147,42 @@ const Testimonials = () => {
     });
   };
 
-  const handleCarouselPause = (isPaused: boolean) => {
-    event({
-      action: isPaused ? 'carousel_pause' : 'carousel_resume',
-      category: 'engagement',
-      label: 'Testimonial Carousel'
-    });
-    setIsPaused(isPaused);
-  };
-
-  // Add mouse event handlers for drag functionality
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!carouselRef.current) return;
     
     setIsMouseDown(true);
-    setIsPaused(true); // Pause auto-scrolling when user interacts
+    setStartX(e.pageX); // Store initial mouse X position (absolute)
+    setInitialUnwrappedScrollAtMouseDown(unwrappedScrollLeft); // Store logical scroll at mousedown
     
-    const carousel = carouselRef.current;
-    setStartX(e.pageX - carousel.offsetLeft);
-    setScrollLeft(carousel.scrollLeft);
+    carouselRef.current.style.scrollSnapType = 'none'; // Disable snap for smooth drag
+    carouselRef.current.style.cursor = 'grabbing';
   };
 
-  const handleMouseLeave = () => {
+  const handleMouseLeaveOrUp = () => {
+    if (!carouselRef.current || !isMouseDown) return;
     setIsMouseDown(false);
-    // Resume auto-scrolling after a short delay
-    setTimeout(() => setIsPaused(false), 1000);
-  };
-
-  const handleMouseUp = () => {
-    setIsMouseDown(false);
-    // Resume auto-scrolling after a short delay
-    setTimeout(() => setIsPaused(false), 1000);
+    carouselRef.current.style.scrollSnapType = 'x mandatory'; // Re-enable snap
+    carouselRef.current.style.cursor = 'grab';
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!isMouseDown || !carouselRef.current) return;
     
-    e.preventDefault();
-    const carousel = carouselRef.current;
-    const x = e.pageX - carousel.offsetLeft;
-    const walk = (x - startX) * 2; // Faster drag scrolling
+    e.preventDefault(); // Prevent text selection
     
-    carousel.scrollLeft = scrollLeft - walk;
+    const currentMouseX = e.pageX;
+    const mouseDelta = currentMouseX - startX; // Total mouse movement since mousedown
+    
+    // Calculate new unwrapped (logical) scroll position
+    const targetUnwrappedScrollLeft = initialUnwrappedScrollAtMouseDown - (mouseDelta * scrollSensitivity);
+    setUnwrappedScrollLeft(targetUnwrappedScrollLeft);
+    // The useEffect for unwrappedScrollLeft will handle setting the physical scroll
   };
 
   return (
     <section 
       id="testimonials" 
-      className="relative py-24 overflow-hidden will-change-transform"
+      className="relative py-24 overflow-hidden"
     >
       {/* Background elements */}
       <div className="absolute inset-0 z-0">
@@ -273,29 +238,21 @@ const Testimonials = () => {
         {/* Testimonial Carousel - Horizontal Scrolling */}
         <div 
           className="relative overflow-hidden"
-          style={{ WebkitMaskImage: 'linear-gradient(to right, transparent, black 5%, black 95%, transparent)' }}
+          // Masking for fade effect at edges
+          style={{ WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}
         >
-
           <div
             ref={carouselRef}
-            className="flex gap-6 overflow-x-auto scrollbar-hide py-8"
-            style={{ 
-              WebkitOverflowScrolling: 'touch',
-              cursor: isMouseDown ? 'grabbing' : 'grab',
-              userSelect: 'none'
-            }}
-            onMouseEnter={() => handleCarouselPause(true)}
-            onMouseLeave={handleMouseLeave}
-            onTouchStart={() => handleCarouselPause(true)}
-            onTouchEnd={() => handleCarouselPause(false)}
+            className="flex overflow-x-auto scrollbar-hide cursor-grab" // active:cursor-grabbing is handled by direct style manipulation
             onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseLeaveOrUp} // Consolidated handler
+            onMouseUp={handleMouseLeaveOrUp}   // Consolidated handler
             onMouseMove={handleMouseMove}
+            style={{ scrollSnapType: 'x mandatory', userSelect: 'none' }} // Added userSelect: none
           >
-            {/* Extended set of cards for infinite scrolling */}
             {extendedTestimonials.map((testimonial, index) => (
               <TestimonialCard 
-                key={`testimonial-${testimonial.id}-${index}`}
+                key={`testimonial-${testimonial.id}-${index}`} // Unique key
                 testimonial={testimonial}
                 index={index}
                 onInteraction={handleTestimonialInteraction}
@@ -323,6 +280,38 @@ interface TestimonialCardProps {
 }
 
 const TestimonialCard = ({ testimonial, index, onInteraction }: TestimonialCardProps) => {
+  const [isScrolledToBottom, setIsScrolledToBottom] = useState(false);
+  
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLDivElement;
+    const { scrollTop, scrollHeight, clientHeight } = target;
+    const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10; // 10px threshold
+    setIsScrolledToBottom(isAtBottom);
+  };
+
+  // Get logo-specific styling based on company
+  const getLogoStyle = (companyName: string) => {
+    switch (companyName) {
+      case 'Chosen Wood Window Maintenance':
+      case 'Credit Gnomes':
+      case 'Lynch Carpenter, LLP':
+      case 'Yerba Madre':
+      case 'Skedaddle Humane Wildlife Control':
+      case 'Scopes Facility Services':
+      case 'Sanctuary Wealth Management':
+      case 'Armament Technology Inc':
+        return {
+          mixBlendMode: 'normal' as const,
+          filter: 'brightness(0) invert(1) brightness(1.2)'
+        };
+      default:
+        return {
+          mixBlendMode: 'difference' as const,
+          filter: 'invert(1) hue-rotate(180deg) brightness(1.5) contrast(1.2)'
+        };
+    }
+  };
+
   return (
     <motion.div 
       className="flex-shrink-0 w-[350px] md:w-[400px] h-[680px] rounded-none border-none shadow-lg overflow-hidden flex flex-col justify-between bg-[#1a1a2e]"
@@ -342,23 +331,30 @@ const TestimonialCard = ({ testimonial, index, onInteraction }: TestimonialCardP
         {/* Description - with scrollable container and visible scrollbar for long text */}
         <div className="relative h-[280px]">
           {/* Scrollable content area with always-visible scrollbar on mobile */}
-          <div className="h-full overflow-y-auto pr-2 custom-scrollbar show-scrollbar-mobile">
+          <div 
+            className="h-full overflow-y-auto pr-2 custom-scrollbar show-scrollbar-mobile"
+            onScroll={handleScroll}
+          >
             <p className="text-base text-gray-200 leading-relaxed whitespace-pre-line pb-8">
             {testimonial.description}
           </p>
           </div>
           
-          {/* Fade gradient at the bottom to indicate more content */}
-          <div className="absolute left-0 right-2 bottom-0 h-16 bg-gradient-to-t from-[#1a1a2e] to-transparent pointer-events-none"></div>
+          {/* Fade gradient at the bottom to indicate more content - only show if not scrolled to bottom */}
+          {!isScrolledToBottom && (
+            <div className="absolute left-0 right-2 bottom-0 h-16 bg-gradient-to-t from-[#1a1a2e] to-transparent pointer-events-none"></div>
+          )}
           
-          {/* Small scroll indicator for mobile */}
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-1 flex flex-col items-center md:hidden">
-            <span className="text-mvrk-aqua-blue text-xs mb-1">Scroll for more</span>
-            <svg className="text-mvrk-aqua-blue animate-bounce w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M7 13l5 5 5-5"></path>
-              <path d="M7 6l5 5 5-5"></path>
-            </svg>
-          </div>
+          {/* Small scroll indicator for mobile - positioned better and hidden when scrolled to bottom */}
+          {!isScrolledToBottom && (
+            <div className="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center md:hidden" style={{ bottom: '-18px' }}>
+              <span className="text-mvrk-aqua-blue text-xs mb-1 bg-[#1a1a2e]/80 px-2 py-1 rounded">Scroll for more</span>
+              <svg className="text-mvrk-aqua-blue animate-bounce w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M7 13l5 5 5-5"></path>
+                <path d="M7 6l5 5 5-5"></path>
+              </svg>
+            </div>
+          )}
         </div>
       </div>
       
@@ -386,10 +382,14 @@ const TestimonialCard = ({ testimonial, index, onInteraction }: TestimonialCardP
                   <img 
                     src={encodeURI(testimonial.logo)}
                     alt={`${testimonial.company} logo`}
-                className="h-full max-h-20 w-auto object-contain"
+                    className="w-auto object-contain"
                     style={{ 
-                      mixBlendMode: 'difference',
-                      filter: 'invert(1) hue-rotate(180deg) brightness(1.5) contrast(1.2)'
+                      height: testimonial.company === 'Sanctuary Wealth Management' ? '120px' : 
+                             ['Skedaddle Humane Wildlife Control', 'Credit Gnomes', 'Scopes Facility Services'].includes(testimonial.company) ? '90px' : '60px',
+                      maxHeight: testimonial.company === 'Sanctuary Wealth Management' ? '120px' : 
+                                ['Skedaddle Humane Wildlife Control', 'Credit Gnomes', 'Scopes Facility Services'].includes(testimonial.company) ? '90px' : '60px',
+                      maxWidth: '200px',
+                      ...getLogoStyle(testimonial.company)
                     }}
                     onError={(e) => {
                       console.error(`Failed to load logo: ${testimonial.logo}`);

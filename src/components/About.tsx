@@ -21,7 +21,7 @@ const About = () => {
   return (
     <section 
       id="about" 
-      className="relative py-12 md:py-16 lg:py-20 overflow-hidden section-wrapper"
+      className="relative pt-12 pb-24 overflow-hidden section-wrapper"
     >
       {/* Background elements */}
       <div className="absolute inset-0 z-0">
