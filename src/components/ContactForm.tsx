@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { Send, Mail, User, Building2, AtSign, MessageSquare } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { event } from "@/lib/analytics";
 
 const ContactForm = () => {
   const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
@@ -45,6 +46,19 @@ const ContactForm = () => {
     };
   }, []);
 
+  // Handle form submission tracking
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    // Track the form submission event
+    event({
+      action: 'form_submit',
+      category: 'contact',
+      label: 'Contact Form Submission'
+    });
+    
+    // Continue with normal form submission
+    // Form will handle POST action normally
+  };
+
   return (
     <section 
       id="contact" 
@@ -61,7 +75,7 @@ const ContactForm = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="flex items-center justify-center mb-4"
+          className="flex items-center justify-center mb-8"
         >
           <span className="px-4 py-1 bg-mvrk-teal/10 text-mvrk-aqua-blue text-sm font-medium rounded-full">
             Get in Touch
@@ -70,7 +84,7 @@ const ContactForm = () => {
         
         {/* Section Title */}
         <motion.h2 
-          className="text-4xl font-bold text-center text-white mb-4 md:text-5xl antialiased"
+          className="text-4xl font-bold text-center text-white mb-8 md:text-5xl antialiased"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
@@ -114,6 +128,7 @@ const ContactForm = () => {
             <form 
               action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00Dau000004IrI5" 
               method="POST"
+              onSubmit={handleFormSubmit}
               className="bg-[#1e1e36] backdrop-filter-none rounded-xl p-8 md:p-10 shadow-lg border border-white/10 hover:border-mvrk-teal/20 transition-all duration-300 w-full"
             >
               {/* Hidden fields for Salesforce Web-to-Lead */}
@@ -248,7 +263,7 @@ const ContactForm = () => {
               </div>
               
               <p className="text-sm text-center mt-4 text-gray-300 antialiased">
-                By submitting this form, you agree to our Privacy Policy.
+                By submitting this form, you agree to our <a href="/privacy-policy" className="text-mvrk-aqua-blue hover:underline">Privacy Policy</a>.
               </p>
             </form>
           </div>

@@ -6,7 +6,8 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import { pageview } from "@/lib/analytics";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import { pageview, initScrollDepthTracking } from "@/lib/analytics";
 
 const queryClient = new QueryClient();
 
@@ -19,6 +20,11 @@ const RouteChangeTracker = () => {
     pageview(location.pathname + location.search);
   }, [location]);
   
+  // Initialize scroll depth tracking once on mount
+  useEffect(() => {
+    initScrollDepthTracking();
+  }, []);
+  
   return null;
 };
 
@@ -29,6 +35,7 @@ const AppWithAnalytics = () => {
       <RouteChangeTracker />
       <Routes>
         <Route path="/" element={<Index />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>

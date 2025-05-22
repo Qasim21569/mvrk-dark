@@ -94,6 +94,31 @@
     display: none; /* Chrome, Safari, Opera */
   }
   
+  /* Custom scrollbar styling */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #00A1E0, #63D7E4);
+    border-radius: 10px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, #63D7E4, #00A1E0);
+  }
+  
+  /* Firefox scrollbar */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #00A1E0 rgba(255, 255, 255, 0.05);
+  }
+  
   /* Animation for testimonial shimmer effect */
   @keyframes shimmer {
     0% { background-position: 100% 0; }
@@ -180,4 +205,30 @@ body {
 /* Reduce the work browser has to do during scrolling */
 section, main, footer {
   contain: content;
+}
+
+/* Add CSS for showing scrollbar on mobile */
+@media (max-width: 767px) {
+  .show-scrollbar-mobile::-webkit-scrollbar {
+    width: 5px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: block !important;
+  }
+
+  .show-scrollbar-mobile::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border-radius: 10px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: block !important;
+  }
+
+  .show-scrollbar-mobile::-webkit-scrollbar-thumb {
+    background-color: rgba(79, 209, 197, 0.5) !important;
+    border-radius: 10px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: block !important;
+  }
 }

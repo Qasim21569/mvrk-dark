@@ -21,20 +21,20 @@ const About = () => {
   return (
     <section 
       id="about" 
-      className="relative py-24 overflow-hidden section-wrapper"
+      className="relative py-12 md:py-16 lg:py-20 overflow-hidden section-wrapper"
     >
       {/* Background elements */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-b from-[#1a1a2e]/90 via-[#1a1a2e] to-[#1a1a2e]/80" />
       </div>
       
-      <div className="container mx-auto px-6 z-10 relative">
+      <div className="container mx-auto px-4 md:px-6 z-10 relative">
         {/* Section label */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="flex items-center justify-center mb-4"
+          className="flex items-center justify-center mb-3 md:mb-8"
         >
           <span className="px-4 py-1 bg-mvrk-teal/10 text-mvrk-aqua-blue text-sm font-medium rounded-full">
             About Us
@@ -43,7 +43,7 @@ const About = () => {
         
         {/* Headline */}
         <motion.h2 
-          className="text-4xl font-bold md:text-5xl text-white mb-4 text-center"
+          className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 md:mb-4 text-center"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
@@ -53,7 +53,7 @@ const About = () => {
         
         {/* Intro Paragraph */}
         <motion.div 
-          className="max-w-[800px] mx-auto mb-16"
+          className="max-w-[800px] mx-auto mb-10 md:mb-12 lg:mb-16"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.2 }}

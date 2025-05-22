@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { cn, throttle } from "@/lib/utils";
 import { Lightbulb, Handshake, Rocket, ChevronRight } from "lucide-react";
+import { event } from "@/lib/analytics";
 
 const phases = [
   {
@@ -38,8 +39,36 @@ const Implementation = () => {
     
     if (newActiveCard !== activeCard) {
       setActiveCard(newActiveCard);
+      
+      // Track the phase card view
+      event({
+        action: 'phase_card_view',
+        category: 'service',
+        label: `${phases[newActiveCard].title} Phase`,
+        value: newActiveCard + 1
+      });
     }
   }, 100); // Only run at most once every 100ms
+
+  // Track mobile indicator clicks
+  const handleIndicatorClick = (index: number) => {
+    // Track the indicator click
+    event({
+      action: 'phase_indicator_click',
+      category: 'service',
+      label: `${phases[index].title} Phase`,
+      value: index + 1
+    });
+    
+    // Scroll to the selected phase
+    const container = document.querySelector('#implementing .snap-x');
+    if (container) {
+      container.scrollTo({
+        left: index * container.clientWidth,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   return (
     <section 
@@ -57,7 +86,7 @@ const Implementation = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="flex items-center justify-center mb-4"
+          className="flex items-center justify-center mb-8"
         >
           <span className="px-4 py-1 bg-mvrk-teal/10 text-mvrk-aqua-blue text-sm font-medium rounded-full">
             Implementation
@@ -66,7 +95,7 @@ const Implementation = () => {
         
         {/* Section Title */}
         <motion.h2 
-          className="text-4xl font-bold text-center text-white mb-4 md:text-5xl"
+          className="text-4xl font-bold text-center text-white mb-8 md:text-5xl"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
@@ -132,15 +161,7 @@ const Implementation = () => {
                   "w-2 h-2 rounded-full transition-all duration-300",
                   activeCard === index ? "bg-mvrk-teal w-6" : "bg-mvrk-slate/30"
                 )}
-                onClick={() => {
-                  const container = document.querySelector('#implementing .snap-x');
-                  if (container) {
-                    container.scrollTo({
-                      left: index * container.clientWidth,
-                      behavior: 'smooth'
-                    });
-                  }
-                }}
+                onClick={() => handleIndicatorClick(index)}
                 aria-label={`View phase ${index + 1}: ${phases[index].title}`}
               />
             ))}
@@ -181,9 +202,19 @@ interface PhaseProps {
 }
 
 const PhaseCard = ({ phase, delay, isLast, isFirst, index }: PhaseProps) => {
+  // Track card focus/click
+  const handleCardInteraction = () => {
+    event({
+      action: 'phase_card_interaction',
+      category: 'service',
+      label: `${phase.title} Phase Card`,
+      value: index + 1
+    });
+  };
+
   return (
     <motion.div 
-      className="relative pt-4 px-1"
+      className="relative pt-8 px-1"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay }}
@@ -192,8 +223,10 @@ const PhaseCard = ({ phase, delay, isLast, isFirst, index }: PhaseProps) => {
         className="bg-[#252542]/40 backdrop-blur-md rounded-xl p-6 h-full border border-white/5 shadow-lg hover:border-mvrk-teal/30 transition-all duration-300 focus-within:ring-2 focus-within:ring-mvrk-teal/50"
         tabIndex={0}
         aria-label={`${phase.title} phase: ${phase.description}`}
+        onClick={handleCardInteraction}
+        onFocus={handleCardInteraction}
       >
-        <div className="absolute -top-1 md:-top-3 left-2 md:-left-3 bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl shadow-md">
+        <div className="absolute -top-[0.00rem] md:-top-3 -left-[0.8rem] md:-left-3 bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl shadow-md">
           {phase.letter}
         </div>
         <div className="pt-6">

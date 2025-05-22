@@ -27,45 +27,14 @@ const Footer = () => {
       <div className="absolute inset-0 bg-[#151525] z-0"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Footer top with logo and pattern */}
-        <div className="flex flex-col md:flex-row items-center justify-between mb-12 pb-12 border-b border-white/10">
-          <div className="mb-8 md:mb-0">
-            <img src="/logo-color.png" alt="MVRK Logo" className="h-12 w-auto" />
-          </div>
-          
-          <div className="flex space-x-6">
-            <a href="https://www.linkedin.com/company/mvrk-inc/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 hover:bg-mvrk-teal/20 flex items-center justify-center text-gray-300 hover:text-mvrk-aqua-blue transition-all duration-300">
-              <Linkedin size={18} />
-            </a>
-            <a href="https://www.youtube.com/@mvrkinc" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 hover:bg-mvrk-teal/20 flex items-center justify-center text-gray-300 hover:text-mvrk-aqua-blue transition-all duration-300">
-              <Youtube size={18} />
-            </a>
-            <a href="https://zapier.com/experts/mvrk" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 hover:bg-mvrk-teal/20 flex items-center justify-center text-gray-300 hover:text-mvrk-aqua-blue transition-all duration-300">
-              <img src="/zapier_icon-removebg-preview.png" alt="Zapier" className="w-[18px] h-[18px] object-contain" />
-            </a>
-          </div>
-        </div>
-        
-        {/* Salesforce Partner Section */}
-        <div className="flex flex-col md:flex-row items-center justify-center mb-6 pb-4 border-b border-white/10">
-          <div className="flex items-center gap-0">
-            <p className="text-white text-lg font-semibold">Partnered with</p>
-            <div className="overflow-hidden -ml-9">
-              <img 
-                src="/Salesforce_Logo-removebg-preview.png" 
-                alt="Salesforce Partner" 
-                className="h-28 w-auto" 
-              />
-            </div>
-          </div>
-        </div>
-      
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Company Column */}
           <div>
             <div className="mb-5">
-              <h2 className="text-2xl font-bold text-white mb-4">MVRK Inc.</h2>
+              <div className="mb-4">
+                <img src="/logo-color.png" alt="MVRK Logo" className="h-10 w-auto" />
+              </div>
               <p className="text-gray-300 leading-relaxed">
                 Driving clarity, stability, and success with Salesforce. Your trusted partner for implementation, improvement, and transformation.
               </p>
@@ -124,13 +93,27 @@ const Footer = () => {
           </div>
         </div>
         
-        {/* Bottom Bar - Copyright & Credits */}
-        <div className="flex flex-col md:flex-row justify-between items-center">
+        {/* Bottom Bar - Copyright & Credits with Social Icons */}
+        <div className="flex flex-col md:flex-row justify-between items-center pt-6 border-t border-white/10">
           <p className="text-gray-400 text-sm">
             © {currentYear} MVRK Consulting. All rights reserved.
           </p>
-          <div className="mt-4 md:mt-0 flex space-x-6">
-            <a href="#" className="text-gray-400 hover:text-mvrk-aqua-blue transition-colors text-sm">
+          
+          {/* Social Icons moved here */}
+          <div className="flex space-x-4 my-4 md:my-0">
+            <a href="https://www.linkedin.com/company/mvrk-inc/" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/5 hover:bg-mvrk-teal/20 flex items-center justify-center text-gray-300 hover:text-mvrk-aqua-blue transition-all duration-300">
+              <Linkedin size={16} />
+            </a>
+            <a href="https://www.youtube.com/@mvrkinc" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/5 hover:bg-mvrk-teal/20 flex items-center justify-center text-gray-300 hover:text-mvrk-aqua-blue transition-all duration-300">
+              <Youtube size={16} />
+            </a>
+            <a href="https://zapier.com/experts/mvrk" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/5 hover:bg-mvrk-teal/20 flex items-center justify-center text-gray-300 hover:text-mvrk-aqua-blue transition-all duration-300">
+              <img src="/zapier_icon-removebg-preview.png" alt="Zapier" className="w-[14px] h-[14px] object-contain" />
+            </a>
+          </div>
+          
+          <div className="flex space-x-6">
+            <a href="/privacy-policy" className="text-gray-400 hover:text-mvrk-aqua-blue transition-colors text-sm">
               Privacy Policy
             </a>
             <span className="text-gray-400 text-sm">

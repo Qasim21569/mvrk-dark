@@ -57,7 +57,7 @@ const Improvement = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="flex items-center justify-center mb-4"
+          className="flex items-center justify-center mb-8"
         >
           <span className="px-4 py-1 bg-mvrk-teal/10 text-mvrk-aqua-blue text-sm font-medium rounded-full">
             Improvement
@@ -66,7 +66,7 @@ const Improvement = () => {
         
         {/* Section Title */}
         <motion.h2 
-          className="text-4xl font-bold text-center text-white mb-4 md:text-5xl"
+          className="text-4xl font-bold text-center text-white mb-8 md:text-5xl"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
@@ -183,7 +183,7 @@ interface PhaseProps {
 const PhaseCard = ({ phase, delay, isLast, isFirst, index }: PhaseProps) => {
   return (
     <motion.div 
-      className="relative pt-4 px-1"
+      className="relative pt-8 px-1"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay }}
@@ -193,7 +193,7 @@ const PhaseCard = ({ phase, delay, isLast, isFirst, index }: PhaseProps) => {
         tabIndex={0}
         aria-label={`${phase.title} phase: ${phase.description}`}
       >
-        <div className="absolute -top-1 md:-top-3 left-2 md:-left-3 bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl shadow-md">
+        <div className="absolute -top-[0.00rem] md:-top-3 -left-[0.8rem] md:-left-3 bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl shadow-md">
           {phase.letter}
         </div>
         <div className="pt-6">

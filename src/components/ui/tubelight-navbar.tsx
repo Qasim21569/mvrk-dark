@@ -91,14 +91,14 @@ export function TubelightNavbar({ items, className }: TubelightNavbarProps) {
   }, []);
 
   return (
-    <nav className={cn("flex justify-center items-center", className)}>
-      <div className="relative flex items-center gap-1 md:gap-2 lg:gap-3">
+    <nav className={cn("flex justify-center items-center w-full", className)}>
+      <div className="relative flex items-center justify-center gap-2 md:gap-3 lg:gap-4 w-full">
         {items.map((item, index) => (
           <motion.a
             key={item.label}
             href={item.href}
             className={cn(
-              "relative px-3 py-2 text-sm font-medium tracking-wide transition-all duration-300 group",
+              "relative px-2 md:px-3 py-2 text-xs md:text-sm font-medium tracking-wide transition-all duration-300 group whitespace-nowrap",
               activeIndex === index 
                 ? "text-white" 
                 : "text-gray-300 hover:text-white"

@@ -5,6 +5,7 @@ import { cn, throttle } from '@/lib/utils';
 import { TubelightNavbar } from '@/components/ui/tubelight-navbar';
 import { motion } from 'framer-motion';
 import { ChevronDown, ArrowRight } from 'lucide-react';
+import { event } from '@/lib/analytics';
 
 const Hero = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,6 +34,15 @@ const Hero = () => {
       clearTimeout(timer);
     };
   }, []);
+
+  // Track CTA button clicks
+  const handleCtaClick = (ctaType: string) => {
+    event({
+      action: 'button_click',
+      category: 'cta',
+      label: ctaType
+    });
+  };
 
   const navItems = [
     { label: 'Home', href: '#' },
@@ -176,6 +186,7 @@ const Hero = () => {
                 <a 
                     href="#contact" 
                   className="px-8 py-3 bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex items-center gap-2"
+                  onClick={() => handleCtaClick('Contact Us')}
                 >
                     <span>Contact Us</span>
                   <ArrowRight className="w-4 h-4" />
@@ -256,7 +267,7 @@ const Hero = () => {
           <a 
             href="#contact"
             className="mt-6 px-5 py-3 bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue text-white rounded-lg font-medium text-center shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex items-center justify-center gap-2"
-            onClick={() => setIsMenuOpen(false)}
+            onClick={() => handleCtaClick('Contact Us')}
           >
             <span>Contact Us</span>
             <ArrowRight className="w-4 h-4" />
