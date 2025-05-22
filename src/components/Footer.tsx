@@ -21,6 +21,9 @@ const Footer = () => {
     { label: 'Support & Maintenance', href: '#improving' },
   ];
   
+  // WhatsApp message URL with a pre-filled message
+  const whatsappUrl = "https://wa.me/917977801024?text=Hi%20Qasim,%20I%20saw%20the%20MVRK%20website%20you%20created%20and%20I'm%20interested%20in%20discussing%20web%20development%20services%20for%20my%20project.";
+
   return (
     <footer className="relative z-10 py-16">
       {/* Footer background with solid color */}
@@ -116,9 +119,15 @@ const Footer = () => {
             <a href="/privacy-policy" className="text-gray-400 hover:text-mvrk-aqua-blue transition-colors text-sm">
               Privacy Policy
             </a>
-            <span className="text-gray-400 text-sm">
-              Built by Qasim Kharodia
-            </span>
+            <a 
+              href={whatsappUrl} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-gray-400 hover:text-mvrk-aqua-blue transition-colors text-sm flex items-center group"
+            >
+              <span className="group-hover:underline">Built by Qasim Kharodia</span>
+              <span className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+            </a>
           </div>
         </div>
       </div>

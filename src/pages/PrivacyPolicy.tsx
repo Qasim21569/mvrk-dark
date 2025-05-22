@@ -14,7 +14,7 @@ const PrivacyPolicy = () => {
           transition={{ duration: 0.5 }}
         >
           <a href="/" 
-            className="mb-6 px-6 py-2 rounded-md bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue text-white font-semibold hover:opacity-90 transition-opacity flex items-center inline-block"
+            className="mb-6 px-6 py-2 rounded-md bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue text-white font-semibold hover:opacity-90 transition-opacity flex items-center w-fit"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -141,10 +141,10 @@ const PrivacyPolicy = () => {
                 2020-2025 MVRK Inc.
               </p>
               
-              <div className="mt-8">
+              <div className="mt-8 flex justify-center">
                 <a 
                   href="/"
-                  className="px-6 py-2 rounded-md bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue text-white font-semibold hover:opacity-90 transition-opacity inline-flex items-center mx-auto"
+                  className="px-6 py-2 rounded-md bg-gradient-to-r from-mvrk-teal to-mvrk-aqua-blue text-white font-semibold hover:opacity-90 transition-opacity flex items-center w-fit"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
