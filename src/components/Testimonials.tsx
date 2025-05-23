@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { event } from "@/lib/analytics";
@@ -19,12 +19,12 @@ const testimonials = [
   
   {
     id: 2,
-    quote: "Black Box to Real Salesforce Foundation",
-    description: "Working with Vuk and the MVRK team has been incredibly valuable for us.\n\nOur Salesforce instance was originally set up by a consulting firm that felt like a total black box and we had no idea what was built or how to use it in a way that supported our day-to-day. Vuk came in, rolled up his sleeves, and helped us build a real foundation.\n\nOver the past 3+ years, he's helped us not only understand Salesforce, but use it - integrating with tools like Zapier, streamlining our systems, and helping us scale smarter. With Vuk's support, his growing team, and the resources they've shared along the way, we've been able to better connect across departments, collaborate with our broader community, and even win the CMX Best User Group Award - a huge milestone for us.\n\nHe's thoughtful, dependable, and great at bridging the gap between strategy and systems. I've learned so much working alongside him, and I'm always excited for what we'll build next.\n\nHighly Recommended!",
-    author: "Tatiana Becerra",
-    position: "Ambacebador Marketing Manager",
-    company: "Yerba Madre",
-    logo: "/testimonial logos/yerba madre logo.png"
+    quote: "Game Changer",
+    description: "Working with MVRK has been a game changer for us. Vuk didn't just come in and implement, he listened, asked the right questions and truly understood our business. There's no one I would recommend more for Salesforce implementation. He made a huge impact on our sales efforts.",
+    author: "John Brocklebank",
+    position: "VP, Business Development",
+    company: "Scopes Facility Services",
+    logo: "/testimonial logos/Scopes Logo.png"
   },
   
   {
@@ -59,12 +59,12 @@ const testimonials = [
   
   {
     id: 6,
-    quote: "Game Changer",
-    description: "Working with MVRK has been a game changer for us. Vuk didn't just come in and implement, he listened, asked the right questions and truly understood our business. There's no one I would recommend more for Salesforce implementation. He made a huge impact on our sales efforts.",
-    author: "John Brocklebank",
-    position: "VP, Business Development",
-    company: "Scopes Facility Services",
-    logo: "/testimonial logos/Scopes Logo.png"
+    quote: "Black Box to Real Salesforce Foundation",
+    description: "Working with Vuk and the MVRK team has been incredibly valuable for us.\n\nOur Salesforce instance was originally set up by a consulting firm that felt like a total black box and we had no idea what was built or how to use it in a way that supported our day-to-day. Vuk came in, rolled up his sleeves, and helped us build a real foundation.\n\nOver the past 3+ years, he's helped us not only understand Salesforce, but use it - integrating with tools like Zapier, streamlining our systems, and helping us scale smarter. With Vuk's support, his growing team, and the resources they've shared along the way, we've been able to better connect across departments, collaborate with our broader community, and even win the CMX Best User Group Award - a huge milestone for us.\n\nHe's thoughtful, dependable, and great at bridging the gap between strategy and systems. I've learned so much working alongside him, and I'm always excited for what we'll build next.\n\nHighly Recommended!",
+    author: "Tatiana Becerra",
+    position: "Ambacebador Marketing Manager",
+    company: "Yerba Madre",
+    logo: "/testimonial logos/yerba madre logo.png"
   },
   
   {
@@ -88,56 +88,11 @@ const testimonials = [
   }
 ];
 
-const extendedTestimonials = [...testimonials, ...testimonials, ...testimonials];
-const scrollSensitivity = 3; // Increased sensitivity
-
 const Testimonials = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
-  const [isMouseDown, setIsMouseDown] = useState(false);
-  
-  // For drag functionality
-  const [startX, setStartX] = useState(0); // MouseEvent.pageX at mousedown
-  const [initialUnwrappedScrollAtMouseDown, setInitialUnwrappedScrollAtMouseDown] = useState(0);
-  const [unwrappedScrollLeft, setUnwrappedScrollLeft] = useState(0); // Master logical scroll position
-
-  const setPhysicalScrollPosition = useCallback(() => {
-    if (!carouselRef.current || extendedTestimonials.length === 0) return;
-    const oneSetWidth = carouselRef.current.scrollWidth / 3;
-    if (oneSetWidth > 0) {
-      let physicalScroll = (unwrappedScrollLeft % oneSetWidth);
-      if (physicalScroll < 0) {
-        physicalScroll += oneSetWidth;
-      }
-      physicalScroll += oneSetWidth;
-      carouselRef.current.scrollLeft = physicalScroll;
-    } else {
-      carouselRef.current.scrollLeft = unwrappedScrollLeft; // Fallback
-    }
-  }, [unwrappedScrollLeft]);
-
-  useEffect(() => {
-    setPhysicalScrollPosition();
-  }, [unwrappedScrollLeft, setPhysicalScrollPosition]);
-  
-  useEffect(() => {
-    const initAndResizeHandler = () => {
-      if (carouselRef.current && extendedTestimonials.length > 0) {
-        const oneSetWidth = carouselRef.current.scrollWidth / 3;
-        if (oneSetWidth > 0) {
-          // Initial physical position
-          carouselRef.current.scrollLeft = oneSetWidth;
-          // Initial logical position
-          setUnwrappedScrollLeft(oneSetWidth);
-        }
-      }
-    };
-
-    initAndResizeHandler(); // Call on mount
-    window.addEventListener('resize', initAndResizeHandler);
-    return () => {
-      window.removeEventListener('resize', initAndResizeHandler);
-    };
-  }, []); // Empty dependency array, runs once on mount and cleanup on unmount
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   const handleTestimonialInteraction = (interactionType: 'hover' | 'tap', testimonialId: number) => {
     event({
@@ -147,36 +102,25 @@ const Testimonials = () => {
     });
   };
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!carouselRef.current) return;
-    
-    setIsMouseDown(true);
-    setStartX(e.pageX); // Store initial mouse X position (absolute)
-    setInitialUnwrappedScrollAtMouseDown(unwrappedScrollLeft); // Store logical scroll at mousedown
-    
-    carouselRef.current.style.scrollSnapType = 'none'; // Disable snap for smooth drag
-    carouselRef.current.style.cursor = 'grabbing';
+  const handleDragStart = (e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    const pageX = 'touches' in e ? e.touches[0].pageX : e.pageX;
+    setStartX(pageX - (carouselRef.current?.offsetLeft || 0));
+    setScrollLeft(carouselRef.current?.scrollLeft || 0);
   };
 
-  const handleMouseLeaveOrUp = () => {
-    if (!carouselRef.current || !isMouseDown) return;
-    setIsMouseDown(false);
-    carouselRef.current.style.scrollSnapType = 'x mandatory'; // Re-enable snap
-    carouselRef.current.style.cursor = 'grab';
+  const handleDragEnd = () => {
+    setIsDragging(false);
   };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isMouseDown || !carouselRef.current) return;
+  const handleDragMove = (e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
+    if (!isDragging || !carouselRef.current) return;
+    e.preventDefault();
     
-    e.preventDefault(); // Prevent text selection
-    
-    const currentMouseX = e.pageX;
-    const mouseDelta = currentMouseX - startX; // Total mouse movement since mousedown
-    
-    // Calculate new unwrapped (logical) scroll position
-    const targetUnwrappedScrollLeft = initialUnwrappedScrollAtMouseDown - (mouseDelta * scrollSensitivity);
-    setUnwrappedScrollLeft(targetUnwrappedScrollLeft);
-    // The useEffect for unwrappedScrollLeft will handle setting the physical scroll
+    const pageX = 'touches' in e ? e.touches[0].pageX : e.pageX;
+    const x = pageX - (carouselRef.current.offsetLeft || 0);
+    const walk = (x - startX) * 1.5; // Reduced sensitivity multiplier
+    carouselRef.current.scrollLeft = scrollLeft - walk;
   };
 
   return (
@@ -230,7 +174,6 @@ const Testimonials = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
         >
           <div className="flex items-center gap-2 px-4 py-1.5 bg-white/5 rounded-full text-gray-400 text-sm">
-            {/*  */}
             <span>Drag to explore more testimonials</span>
           </div>
         </motion.div>
@@ -238,21 +181,32 @@ const Testimonials = () => {
         {/* Testimonial Carousel - Horizontal Scrolling */}
         <div 
           className="relative overflow-hidden"
-          // Masking for fade effect at edges
-          style={{ WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}
+          style={{ 
+            WebkitMaskImage: 'linear-gradient(to right, transparent, black 5%, black 95%, transparent)' 
+          }}
         >
           <div
             ref={carouselRef}
-            className="flex overflow-x-auto scrollbar-hide cursor-grab" // active:cursor-grabbing is handled by direct style manipulation
-            onMouseDown={handleMouseDown}
-            onMouseLeave={handleMouseLeaveOrUp} // Consolidated handler
-            onMouseUp={handleMouseLeaveOrUp}   // Consolidated handler
-            onMouseMove={handleMouseMove}
-            style={{ scrollSnapType: 'x mandatory', userSelect: 'none' }} // Added userSelect: none
+            className={`
+              flex gap-6 overflow-x-auto scrollbar-hide 
+              ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}
+            `}
+            onMouseDown={handleDragStart}
+            onMouseUp={handleDragEnd}
+            onMouseLeave={handleDragEnd}
+            onMouseMove={handleDragMove}
+            onTouchStart={handleDragStart}
+            onTouchEnd={handleDragEnd}
+            onTouchMove={handleDragMove}
+            style={{
+              scrollBehavior: isDragging ? 'auto' : 'smooth',
+              scrollSnapType: isDragging ? 'none' : 'x proximity',
+              userSelect: 'none'
+            }}
           >
-            {extendedTestimonials.map((testimonial, index) => (
+            {testimonials.map((testimonial, index) => (
               <TestimonialCard 
-                key={`testimonial-${testimonial.id}-${index}`} // Unique key
+                key={`testimonial-${testimonial.id}`}
                 testimonial={testimonial}
                 index={index}
                 onInteraction={handleTestimonialInteraction}
